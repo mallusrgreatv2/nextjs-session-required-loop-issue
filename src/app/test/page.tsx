@@ -1,24 +1,18 @@
 "use client";
 
 import { SessionProvider, useSession } from "next-auth/react";
-import { ReactElement } from "react";
-import useSWR from "swr";
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+import { ReactElement, useState } from "react";
 export default function HomePage() {
-  const { data, isLoading } = useSWR(
-    "https://jsonplaceholder.typicode.com/posts/1",
-    fetcher
-  );
-  if (isLoading) return <>Loading...</>;
+  const [loading, setLoading] = useState(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 1000);
+  if (loading) return <>Loading...</>;
 
   return (
     <SessionProvider>
       <Auth>
-        <p>
-          Hey
-          <br />
-          {JSON.stringify(data)}
-        </p>
+        <p>Successfully loaded</p>
       </Auth>
     </SessionProvider>
   );
